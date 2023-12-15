@@ -1,6 +1,7 @@
 package tpalmerjr.springframework.spring6restmvc.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import tpalmerjr.springframework.spring6restmvc.model.Customer;
 
 import java.time.LocalDateTime;
@@ -71,5 +72,19 @@ public class CustomerServiceImpl implements CustomerService {
     public void updateCustomerById(UUID customerId, Customer customer) {
         Customer existing = customerMap.get(customerId);
         existing.setName(customer.getName());
+    }
+
+    @Override
+    public void deleteCustomerById(UUID customerId) {
+        customerMap.remove(customerId);
+    }
+
+    @Override
+    public void patchCustomerById(UUID customerId, Customer customer) {
+        Customer existing = customerMap.get(customerId);
+
+        if (StringUtils.hasText(customer.getName())) {
+            existing.setName(customer.getName());
+        }
     }
 }
